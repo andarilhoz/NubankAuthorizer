@@ -9,6 +9,24 @@ namespace NubankAuthorizer.Models
         public Account Account;
         public List<Violations> Violations;
 
+        public static Response Generate(Account account, List<Violations> violationsList)
+        {
+            return new Response()
+            {
+                Account = account,
+                Violations = violationsList
+            };
+        }
+        
+        public static Response Generate(Account account, Violations violation)
+        {
+            return new Response()
+            {
+                Account = account,
+                Violations = new List<Violations>(){ violation }
+            };
+        }
+
         public bool Equals(Response other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -21,11 +39,10 @@ namespace NubankAuthorizer.Models
 
             if (other.Violations.Count != Violations.Count)
                 return false;
-            
-            for (int i = 0; i < Violations.Count; i++)
+
+            if (Violations.Except(other.Violations).Any())
             {
-                if (Violations[i] != other.Violations[i])
-                    return false;
+                return false;
             }
 
             return true;

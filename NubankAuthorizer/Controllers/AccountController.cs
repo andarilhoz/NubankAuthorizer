@@ -17,21 +17,12 @@ namespace NubankAuthorizer.Controllers
         {
             if (currentAccount != null)
             {
-                return new Response()
-                {
-                    Account = currentAccount,
-                    Violations = new List<Violations>() { Violations.ACCOUNT_ALREADY_INITIALIZED }
-                };
+                return Response.Generate(currentAccount, Violations.ACCOUNT_ALREADY_INITIALIZED);
             }
 
             currentAccount = accountData;
-            
-            Response response = new Response()
-            {
-                Account = accountData,
-                Violations = new List<Violations>()
-            };
-            
+
+            Response response = Response.Generate(accountData, new List<Violations>());
             return response;
         }
     }
