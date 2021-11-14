@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Numerics;
 
 namespace NubankAuthorizer.Models
 {
     public class TransactionBuilder
     {
-        private BigInteger amount;
+        private int amount;
         private string merchant;
         private DateTime time = DateTime.Now;
 
-        public TransactionBuilder withAmount(BigInteger amount)
+        public TransactionBuilder withAmount(int amount)
         {
             this.amount = amount;
             return this;
@@ -21,9 +20,9 @@ namespace NubankAuthorizer.Models
             return this;
         }
 
-        public TransactionBuilder withTime(DateTime time)
+        public TransactionBuilder withTime(string time)
         {
-            this.time = time;
+            this.time = DateTime.Parse(time, null, System.Globalization.DateTimeStyles.AdjustToUniversal);
             return this;
         }
 

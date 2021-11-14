@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Collections.Generic;
 using NubankAuthorizer.Controllers;
 using NubankAuthorizer.Models;
 using NUnit.Framework;
 
 namespace AuthorizerTests
 {
-    public class TransactionTests
+    public class TransactionControllerTests
     {
         private TransactionController transactionController;
         private AccountController accountController;
@@ -43,7 +41,7 @@ namespace AuthorizerTests
                     .withMerchant("Burger King")
                     .Build();
 
-            BigInteger finalLimit = testAccount.AvailableLimit - testTransaction.Amount;
+            int finalLimit = testAccount.AvailableLimit - testTransaction.Amount;
 
             Response expectedResponse = new ResponseBuilder().withAccount(testAccount).Build();
             
@@ -78,7 +76,7 @@ namespace AuthorizerTests
                 .withMerchant("Burger King")
                 .Build();
             
-            BigInteger expectedLimit = notActiveAccount.AvailableLimit;
+            int expectedLimit = notActiveAccount.AvailableLimit;
 
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(notActiveAccount)
@@ -101,7 +99,7 @@ namespace AuthorizerTests
                 .withMerchant("Mercedes")
                 .Build();
 
-            BigInteger expectedLimit = testAccount.AvailableLimit;
+            int expectedLimit = testAccount.AvailableLimit;
 
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(testAccount)
@@ -122,31 +120,31 @@ namespace AuthorizerTests
             OperationTransaction testTransaction1 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:00.000Z"))
+                .withTime("2019-02-13T11:00:00.000Z")
                 .Build();
 
             OperationTransaction testTransaction2 = new TransactionBuilder()
                 .withAmount(10)
-                .withMerchant("Habbib's")
-                .withTime(DateTime.Parse("2019-02-13T11:00:01.000Z"))
+                .withMerchant("Habbib's") 
+                .withTime("2019-02-13T11:00:01.000Z")
                 .Build();
 
             OperationTransaction testTransaction3 = new TransactionBuilder()
                 .withAmount(5)
                 .withMerchant("McDonald's")
-                .withTime(DateTime.Parse("2019-02-13T11:01:01.000Z"))
+                .withTime("2019-02-13T11:01:01.000Z")
                 .Build();
             
             OperationTransaction testTransaction4 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Subway")
-                .withTime(DateTime.Parse("2019-02-13T11:01:31.000Z"))
+                .withTime("2019-02-13T11:01:31.000Z")
                 .Build();
             
             OperationTransaction testTransaction5 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T12:00:00.000Z"))
+                .withTime("2019-02-13T12:00:00.000Z")
                 .Build();
             
             Response expectedResponse = new ResponseBuilder()
@@ -156,7 +154,7 @@ namespace AuthorizerTests
 
             Response successResponse = new ResponseBuilder().withAccount(testAccount).Build();
 
-            BigInteger expectedLimit = testAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -
+            int expectedLimit = testAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -
                                        testTransaction3.Amount - testTransaction5.Amount;
 
             Response response1 = transactionController.AddTransaction(testTransaction1);
@@ -182,25 +180,25 @@ namespace AuthorizerTests
             OperationTransaction testTransaction1 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:00.000Z"))
+                .withTime("2019-02-13T11:00:00.000Z")
                 .Build();
 
             OperationTransaction testTransaction2 = new TransactionBuilder()
                 .withAmount(10)
                 .withMerchant("McDonald's")
-                .withTime(DateTime.Parse("2019-02-13T11:00:01.000Z"))
+                .withTime("2019-02-13T11:00:01.000Z")
                 .Build();
             
             OperationTransaction testTransaction3 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:02.000Z"))
+                .withTime("2019-02-13T11:00:02.000Z")
                 .Build();
             
             OperationTransaction testTransaction4 = new TransactionBuilder()
                 .withAmount(15)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:03.000Z"))
+                .withTime("2019-02-13T11:00:03.000Z")
                 .Build();
             
             Response expectedResponse = new ResponseBuilder()
@@ -214,7 +212,7 @@ namespace AuthorizerTests
                 Violations = new List<Violations>()
             };
 
-            BigInteger expectedLimit = testAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -testTransaction4.Amount;
+            int expectedLimit = testAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -testTransaction4.Amount;
             
             Response response1 = transactionController.AddTransaction(testTransaction1);
             Response response2 = transactionController.AddTransaction(testTransaction2);
@@ -244,43 +242,43 @@ namespace AuthorizerTests
             OperationTransaction testTransaction1 = new TransactionBuilder()
                 .withAmount(10)
                 .withMerchant("McDonald's")
-                .withTime(DateTime.Parse("2019-02-13T11:00:01.000Z"))
+                .withTime("2019-02-13T11:00:01.000Z")
                 .Build();
             
             OperationTransaction testTransaction2 = new TransactionBuilder()
                 .withAmount(20)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:02.000Z"))
+                .withTime("2019-02-13T11:00:02.000Z")
                 .Build();
             
             OperationTransaction testTransaction3 = new TransactionBuilder()
                 .withAmount(5)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:07.000Z"))
+                .withTime("2019-02-13T11:00:07.000Z")
                 .Build();
 
             OperationTransaction testTransaction4 = new TransactionBuilder()
                 .withAmount(5)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:08.000Z"))
+                .withTime("2019-02-13T11:00:08.000Z")
                 .Build();
             
             OperationTransaction testTransaction5 = new TransactionBuilder()
                 .withAmount(150)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:18.000Z"))
+                .withTime("2019-02-13T11:00:18.000Z")
                 .Build();
             
             OperationTransaction testTransaction6 = new TransactionBuilder()
                 .withAmount(190)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T11:00:22.000Z"))
+                .withTime("2019-02-13T11:00:22.000Z")
                 .Build();
             
             OperationTransaction testTransaction7 = new TransactionBuilder()
                 .withAmount(15)
                 .withMerchant("Burger King")
-                .withTime(DateTime.Parse("2019-02-13T12:00:27.000Z"))
+                .withTime("2019-02-13T12:00:27.000Z")
                 .Build();
             
             Response expectedResponse4 = new ResponseBuilder()
@@ -297,7 +295,7 @@ namespace AuthorizerTests
 
             Response successResponse = new ResponseBuilder().withAccount(multipleViolationsAccount).Build();
 
-            BigInteger expectedLimit = multipleViolationsAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -testTransaction4.Amount - testTransaction7.Amount;
+            int expectedLimit = multipleViolationsAccount.AvailableLimit - testTransaction1.Amount - testTransaction2.Amount -testTransaction4.Amount - testTransaction7.Amount;
             
             Response response1 = transactionController.AddTransaction(testTransaction1);
             Response response2 = transactionController.AddTransaction(testTransaction2);

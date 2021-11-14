@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using NubankAuthorizer.Models;
+using NubankAuthorizer.Validators;
+using NubankAuthorizer.Validators.AccountValidators;
 
 namespace NubankAuthorizer.Controllers
 {
     public class AccountController
     {
         private Account currentAccount;
+        private Validator validators;
+
+        public AccountController()
+        {
+            validators = new AccountAlreadyInitializedDecorator(null);
+        }
 
         public Account GetAccount()
         {
@@ -15,9 +23,10 @@ namespace NubankAuthorizer.Controllers
         
         public Response Create(Account accountData)
         {
-            if (currentAccount != null)
+            List<Violations> violationsList = validators.Validation(null, currentAccount);
+            if (violationsList.Count > 0)
             {
-                return Response.Generate(currentAccount, Violations.ACCOUNT_ALREADY_INITIALIZED);
+                return Response.Generate(currentAccount, violationsList);
             }
 
             currentAccount = accountData;

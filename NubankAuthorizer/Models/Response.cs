@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace NubankAuthorizer.Models
 {
     public class Response : IEquatable<Response>
     {
-        public Account Account;
-        public List<Violations> Violations;
+        [JsonProperty("account")]
+        public Account Account { get; set; }
+        
+        [JsonProperty("violations")]
+        public List<Violations> Violations { get; set; }
 
         public static Response Generate(Account account, List<Violations> violationsList)
         {

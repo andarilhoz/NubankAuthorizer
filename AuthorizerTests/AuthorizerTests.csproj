@@ -16,4 +16,17 @@
       <ProjectReference Include="..\NubankAuthorizer\NubankAuthorizer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Remove="operations.resx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="operations.Designer.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\operations" />
+      <EmbeddedResource Include="Resources\operations" />
+    </ItemGroup>
+
 </Project>

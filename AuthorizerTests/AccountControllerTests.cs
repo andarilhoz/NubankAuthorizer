@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using NubankAuthorizer.Controllers;
 using NubankAuthorizer.Models;
 using NUnit.Framework;
