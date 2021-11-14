@@ -12,7 +12,7 @@ namespace NubankAuthorizer.Controllers
         private readonly AccountController accountController;
         private readonly Validator validators;
 
-        private IDatabase<OperationTransaction> transactionsDatabase;
+        private readonly IDatabase<OperationTransaction> transactionsDatabase;
 
         public TransactionController(AccountController accountController, IDatabase<OperationTransaction> transactionsDatabase)
         {

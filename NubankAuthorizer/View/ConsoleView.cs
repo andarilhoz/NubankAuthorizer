@@ -5,7 +5,7 @@ using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.View
 {
-    public class ConsoleView
+    public static class ConsoleView
     {
         public static void PrintOutput(List<Response> responses)
         {

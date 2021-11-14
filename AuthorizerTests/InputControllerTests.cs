@@ -50,7 +50,7 @@ namespace AuthorizerTests
             string fakeData = TesterUtils.GetFileContents("operations");
 
             List<string> operationsString = InputController.SliceOperations(fakeData);
-            List<Operations> operations = inputController.ConvertToOperation(operationsString);
+            List<Operations> operations = InputController.ConvertToOperation(operationsString);
 
             Account account = new Account()
             {

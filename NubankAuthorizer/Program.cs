@@ -26,7 +26,7 @@ namespace NubankAuthorizer
                 lines.Add(line);
             }
             
-            List<Operations> operations = inputController.ConvertToOperation(lines);
+            List<Operations> operations = InputController.ConvertToOperation(lines);
             List<Response> responses = new List<Response>();
             
             foreach (Operations operation in operations)

@@ -8,7 +8,7 @@ namespace NubankAuthorizer.Controllers
 {
     public class AccountController : IOperationController
     {
-        private IDatabase<Account> accountDatabase;
+        private readonly IDatabase<Account> accountDatabase;
         private readonly Validator validators;
 
         public AccountController(IDatabase<Account> database)

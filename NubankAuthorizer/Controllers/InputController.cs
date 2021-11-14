@@ -34,7 +34,7 @@ namespace NubankAuthorizer.Controllers
         /// </summary>
         /// <param name="commandLines">List of command lines</param>
         /// <returns>List of operations</returns>
-        public List<Operations> ConvertToOperation(List<string> commandLines)
+        public static List<Operations> ConvertToOperation(List<string> commandLines)
         {
             List<Operations> operations = new List<Operations>();
             foreach (string line in commandLines)
@@ -47,7 +47,7 @@ namespace NubankAuthorizer.Controllers
         /// <summary>
         /// Convert single line string of operation into Operation
         /// </summary>
-        /// <param name="commandLine">string with singleline command</param>
+        /// <param name="commandLine">string with single line command</param>
         /// <returns>Operation</returns>
         public static Operations ReadSingleOperation(string commandLine)
         {
