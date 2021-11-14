@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NubankAuthorizer.Controllers;
 using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.TransactionValidators
@@ -8,18 +9,18 @@ namespace NubankAuthorizer.Validators.TransactionValidators
     {
         private const int DoubleTransactionLimitInMinutes = 2;
 
-        private readonly List<OperationTransaction> transactions;
+        private readonly TransactionController transactionController;
         
-        public DoubleTransactionDecorator(Validator comp, List<OperationTransaction> transactions) : base(comp)
+        public DoubleTransactionDecorator(Validator comp, TransactionController transactionController) : base(comp)
         {
-            this.transactions = transactions;
+            this.transactionController = transactionController;
         }
 
         public override List<Violations> Validation(OperationTransaction transaction, Account account)
         {
             List<Violations> baseViolations = base.Validation(transaction, account);
             
-            IEnumerable<OperationTransaction> sameOperationsDoubledTransaction = transactions.Where(t =>
+            IEnumerable<OperationTransaction> sameOperationsDoubledTransaction = transactionController.GetTransactions().Where(t =>
                 (transaction.Time - t.Time).TotalMinutes < DoubleTransactionLimitInMinutes && transaction.Amount == t.Amount &&
                 t.Merchant == transaction.Merchant);
             

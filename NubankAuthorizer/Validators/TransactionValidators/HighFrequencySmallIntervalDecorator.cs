@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NubankAuthorizer.Controllers;
 using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.TransactionValidators
@@ -9,11 +10,11 @@ namespace NubankAuthorizer.Validators.TransactionValidators
         private const int HighFrequencyLimitInMinutes = 2;
         private const int HighFrequencyLimit = 3;
 
-        private readonly List<OperationTransaction> transactions;
+        private readonly TransactionController transactionController;
         
-        public HighFrequencySmallIntervalDecorator(Validator comp, List<OperationTransaction> transactions) : base(comp)
+        public HighFrequencySmallIntervalDecorator(Validator comp, TransactionController transactionController) : base(comp)
         {
-            this.transactions = transactions;
+            this.transactionController = transactionController;
         }
 
         public override List<Violations> Validation(OperationTransaction transaction, Account account)
@@ -21,7 +22,7 @@ namespace NubankAuthorizer.Validators.TransactionValidators
             List<Violations> baseViolations = base.Validation(transaction, account);
             
             IEnumerable<OperationTransaction> lastOperationsHighFrequency =
-                transactions.Where(t => (transaction.Time - t.Time).TotalMinutes < HighFrequencyLimitInMinutes);
+                transactionController.GetTransactions().Where(t => (transaction.Time - t.Time).TotalMinutes < HighFrequencyLimitInMinutes);
 
             if (lastOperationsHighFrequency.Count() >= HighFrequencyLimit)
             {

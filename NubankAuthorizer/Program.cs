@@ -16,11 +16,10 @@ namespace NubankAuthorizer
             AccountController accountController = new AccountController();
             TransactionController transactionController = new TransactionController(accountController);
             ConsoleView consoleView = new ConsoleView();
-            
-            string line;
 
             List<string> lines = new List<string>();
-
+            
+            string line;
             while ((line = Console.ReadLine()) != null)
             {
                 lines.Add(line);
@@ -39,6 +38,7 @@ namespace NubankAuthorizer
                     responses.Add(transactionController.AddTransaction(operation.Transaction));
                 }
             }
+            
             consoleView.PrintOutput(responses);
         }
     }

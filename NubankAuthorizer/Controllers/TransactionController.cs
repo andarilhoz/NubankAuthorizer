@@ -19,9 +19,14 @@ namespace NubankAuthorizer.Controllers
             
             validators = new CardNotActiveDecorator(null);
             validators = new InsufficientLimitDecorator(validators);
-            validators = new HighFrequencySmallIntervalDecorator(validators, transactions);
-            validators = new DoubleTransactionDecorator(validators, transactions);
+            validators = new HighFrequencySmallIntervalDecorator(validators, this);
+            validators = new DoubleTransactionDecorator(validators, this);
             validators = new AccountNotInitializedDecorator(validators);
+        }
+
+        public List<OperationTransaction> GetTransactions()
+        {
+            return transactions;
         }
         
         public Response AddTransaction(OperationTransaction transaction)
