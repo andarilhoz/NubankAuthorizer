@@ -1,6 +1,7 @@
 ﻿using System;
+using NubankAuthorizer.Models;
 
-namespace NubankAuthorizer.Models
+namespace AuthorizerTests.Builders
 {
     public class TransactionBuilder
     {

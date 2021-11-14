@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using AuthorizerTests.Builders;
 using NubankAuthorizer.Controllers;
+using NubankAuthorizer.DBInterfaces;
 using NubankAuthorizer.Models;
 using NUnit.Framework;
 
@@ -12,12 +14,18 @@ namespace AuthorizerTests
         
         private Account testAccount;
         private Account notActiveAccount;
-        
+
+        private MemoryDatabase<Account> memoryAccountDatabase;
+        private MemoryDatabase<OperationTransaction> memoryTransactionsDatabase;
+
         [SetUp]
         public void Setup()
         {
-            accountController = new AccountController();
-            transactionController = new TransactionController(accountController);
+            memoryAccountDatabase = new MemoryDatabase<Account>();
+            memoryTransactionsDatabase = new MemoryDatabase<OperationTransaction>();
+            
+            accountController = new AccountController(memoryAccountDatabase);
+            transactionController = new TransactionController(accountController, memoryTransactionsDatabase);
             testAccount = new Account()
             {
                 ActiveCard = true,
@@ -59,7 +67,7 @@ namespace AuthorizerTests
                 .withMerchant("Burger King")
                 .Build();
 
-            Response expectedResponse = new ResponseBuilder().withViolation(Violations.ACCOUNT_NOT_INITIALIZED).Build();
+            Response expectedResponse = new ResponseBuilder().withViolation(Violations.AccountNotInitialized).Build();
 
             Response response = transactionController.AddTransaction(testTransaction);
             
@@ -80,7 +88,7 @@ namespace AuthorizerTests
 
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(notActiveAccount)
-                .withViolation(Violations.CARD_NOT_ACTIVE)
+                .withViolation(Violations.CardNotActive)
                 .Build();
 
             Response response = transactionController.AddTransaction(testTransaction);
@@ -103,7 +111,7 @@ namespace AuthorizerTests
 
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(testAccount)
-                .withViolation(Violations.INSUFFICIENT_LIMIT)
+                .withViolation(Violations.InsufficientLimit)
                 .Build();
 
             Response response = transactionController.AddTransaction(testTransaction);
@@ -149,7 +157,7 @@ namespace AuthorizerTests
             
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(testAccount)
-                .withViolation(Violations.HIGH_FREQUENCY_SMALL_INTERVAL)
+                .withViolation(Violations.HighFrequencySmallInterval)
                 .Build();
 
             Response successResponse = new ResponseBuilder().withAccount(testAccount).Build();
@@ -203,7 +211,7 @@ namespace AuthorizerTests
             
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(testAccount)
-                .withViolation(Violations.DOUBLE_TRANSACTION)
+                .withViolation(Violations.DoubleTransaction)
                 .Build();
 
             Response successResponse = new Response()
@@ -283,14 +291,14 @@ namespace AuthorizerTests
             
             Response expectedResponse4 = new ResponseBuilder()
                 .withAccount(multipleViolationsAccount)
-                .withViolation(Violations.HIGH_FREQUENCY_SMALL_INTERVAL)
-                .withViolation(Violations.DOUBLE_TRANSACTION)
+                .withViolation(Violations.HighFrequencySmallInterval)
+                .withViolation(Violations.DoubleTransaction)
                 .Build();
 
             Response expectedResponse5And6 = new ResponseBuilder()
                 .withAccount(multipleViolationsAccount)
-                .withViolation(Violations.INSUFFICIENT_LIMIT)
-                .withViolation(Violations.HIGH_FREQUENCY_SMALL_INTERVAL)
+                .withViolation(Violations.InsufficientLimit)
+                .withViolation(Violations.HighFrequencySmallInterval)
                 .Build();
 
             Response successResponse = new ResponseBuilder().withAccount(multipleViolationsAccount).Build();

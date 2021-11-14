@@ -3,9 +3,9 @@ using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.TransactionValidators
 {
-    class CardNotActiveDecorator: Decorator
+    internal class CardNotActiveValidationDecorator: ValidationDecorator
     {
-        public CardNotActiveDecorator(Validator comp) : base(comp)
+        public CardNotActiveValidationDecorator(Validator comp) : base(comp)
         {
         }
 
@@ -14,7 +14,7 @@ namespace NubankAuthorizer.Validators.TransactionValidators
             List<Violations> baseViolations = base.Validation(transaction, account);
             
             if (!account.ActiveCard)
-                baseViolations.Add(Violations.CARD_NOT_ACTIVE);
+                baseViolations.Add(Violations.CardNotActive);
             
             return baseViolations;
         }

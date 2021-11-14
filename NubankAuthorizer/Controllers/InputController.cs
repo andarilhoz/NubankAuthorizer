@@ -7,31 +7,51 @@ namespace NubankAuthorizer.Controllers
 {
     public class InputController
     {
-        public List<Operations> ReceiveOperationsFromString(string data)
+        /// <summary>
+        /// Receive multiline string and converts to a List of operations
+        /// </summary>
+        /// <param name="multilineString">multiline string with commands</param>
+        /// <returns>Operations List based on data input</returns>
+        public List<Operations> ReceiveOperationsFromString(string multilineString)
         {
-            List<string> lines = SliceOperations(data);
+            List<string> lines = SliceOperations(multilineString);
             return ConvertToOperation(lines);
         }
         
-        public List<string> SliceOperations(string data)
+        /// <summary>
+        /// Receive multiline string and splits into string list
+        /// </summary>
+        /// <param name="multilineString">multiline string with commands</param>
+        /// <returns>List with spliced lines as each item</returns>
+        public static List<string> SliceOperations(string multilineString)
         {
-            List<string> splicedLines = data.Replace("\r", "").Split("\n").ToList();
+            List<string> splicedLines = multilineString.Replace("\r", "").Split("\n").ToList();
             return splicedLines;
         }
 
-        public List<Operations> ConvertToOperation(List<string> lines)
+        /// <summary>
+        /// Convert list of strings to list of operations
+        /// </summary>
+        /// <param name="commandLines">List of command lines</param>
+        /// <returns>List of operations</returns>
+        public List<Operations> ConvertToOperation(List<string> commandLines)
         {
             List<Operations> operations = new List<Operations>();
-            foreach (string line in lines)
+            foreach (string line in commandLines)
             {
                 operations.Add(ReadSingleOperation(line));
             }
             return operations;
         }
         
-        public Operations ReadSingleOperation(string data)
+        /// <summary>
+        /// Convert single line string of operation into Operation
+        /// </summary>
+        /// <param name="commandLine">string with singleline command</param>
+        /// <returns>Operation</returns>
+        public static Operations ReadSingleOperation(string commandLine)
         {
-            return JsonConvert.DeserializeObject<Operations>(data);
+            return JsonConvert.DeserializeObject<Operations>(commandLine);
         }
     }
 }

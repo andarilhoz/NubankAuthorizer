@@ -7,7 +7,7 @@ namespace NubankAuthorizer.View
 {
     public class ConsoleView
     {
-        public void PrintOutput(List<Response> responses)
+        public static void PrintOutput(List<Response> responses)
         {
             foreach (Response response in responses)
             {

@@ -1,4 +1,6 @@
+using AuthorizerTests.Builders;
 using NubankAuthorizer.Controllers;
+using NubankAuthorizer.DBInterfaces;
 using NubankAuthorizer.Models;
 using NUnit.Framework;
 
@@ -7,12 +9,15 @@ namespace AuthorizerTests
     public class AccountControllerTests
     {
         private AccountController accountController;
+        private MemoryDatabase<Account> memoryAccountDatabase;
         private Account testAccount;
         
         [SetUp]
         public void Setup()
         {
-            accountController = new AccountController();
+            memoryAccountDatabase = new MemoryDatabase<Account>();
+            
+            accountController = new AccountController(memoryAccountDatabase);
             testAccount = new Account()
             {
                 ActiveCard = true,
@@ -34,7 +39,7 @@ namespace AuthorizerTests
         {
             Response expectedResponse = new ResponseBuilder()
                 .withAccount(testAccount)
-                .withViolation(Violations.ACCOUNT_ALREADY_INITIALIZED).Build();
+                .withViolation(Violations.AccountAlreadyInitialized).Build();
 
             accountController.Create(testAccount);
             

@@ -3,9 +3,9 @@ using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.TransactionValidators
 {
-    class InsufficientLimitDecorator: Decorator
+    internal class InsufficientLimitValidationDecorator: ValidationDecorator
     {
-        public InsufficientLimitDecorator(Validator comp) : base(comp)
+        public InsufficientLimitValidationDecorator(Validator comp) : base(comp)
         {
         }
 
@@ -14,7 +14,7 @@ namespace NubankAuthorizer.Validators.TransactionValidators
             List<Violations> baseViolations = base.Validation(transaction, account);
             
             if (account.AvailableLimit < transaction.Amount)
-                baseViolations.Add(Violations.INSUFFICIENT_LIMIT);
+                baseViolations.Add(Violations.InsufficientLimit);
 
             return baseViolations;
         }

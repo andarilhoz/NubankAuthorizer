@@ -8,20 +8,20 @@ namespace NubankAuthorizer.Validators
         public abstract List<Violations> Validation(OperationTransaction transaction, Account account);
     }
 
-    abstract class Decorator : Validator
+    internal abstract class ValidationDecorator : Validator
     {
-        protected Validator Validator;
+        private readonly Validator validator;
 
-        public Decorator(Validator validator)
+        protected ValidationDecorator(Validator validator)
         {
-            Validator = validator;
+            this.validator = validator;
         }
 
         public override List<Violations> Validation(OperationTransaction transaction, Account account)
         {
-            if (Validator != null)
+            if (validator != null)
             {
-                return Validator.Validation(transaction, account);
+                return validator.Validation(transaction, account);
             }
             
             return new List<Violations>();

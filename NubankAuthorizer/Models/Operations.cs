@@ -22,7 +22,7 @@ namespace NubankAuthorizer.Models
         
         public bool Equals(Account other)
         {
-            return ActiveCard == other.ActiveCard && AvailableLimit == other.AvailableLimit;
+            return other != null && ActiveCard == other.ActiveCard && AvailableLimit == other.AvailableLimit;
         }
 
         public override bool Equals(object obj)

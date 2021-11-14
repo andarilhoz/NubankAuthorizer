@@ -8,16 +8,16 @@ namespace NubankAuthorizer.Models
     public enum Violations
     {
         [EnumMember(Value = "insufficient-limit")]
-        INSUFFICIENT_LIMIT,
+        InsufficientLimit,
         [EnumMember(Value = "high-frequency-small-interval")]
-        HIGH_FREQUENCY_SMALL_INTERVAL,
+        HighFrequencySmallInterval,
         [EnumMember(Value = "double-transaction")]
-        DOUBLE_TRANSACTION,
+        DoubleTransaction,
         [EnumMember(Value = "card-not-active")]
-        CARD_NOT_ACTIVE,
+        CardNotActive,
         [EnumMember(Value = "account-already-initialized")]
-        ACCOUNT_ALREADY_INITIALIZED,
+        AccountAlreadyInitialized,
         [EnumMember(Value = "account-not-initialized")]
-        ACCOUNT_NOT_INITIALIZED
+        AccountNotInitialized
     }
 }

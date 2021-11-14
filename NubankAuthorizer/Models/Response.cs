@@ -15,19 +15,10 @@ namespace NubankAuthorizer.Models
 
         public static Response Generate(Account account, List<Violations> violationsList)
         {
-            return new Response()
+            return new Response
             {
                 Account = account,
                 Violations = violationsList
-            };
-        }
-        
-        public static Response Generate(Account account, Violations violation)
-        {
-            return new Response()
-            {
-                Account = account,
-                Violations = new List<Violations>(){ violation }
             };
         }
 

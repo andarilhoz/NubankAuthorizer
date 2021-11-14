@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+using AuthorizerTests.Builders;
 using NubankAuthorizer.Controllers;
 using NubankAuthorizer.Models;
 using NUnit.Framework;
@@ -22,7 +21,7 @@ namespace AuthorizerTests
         {
             string fakeData = "{\"account\": {\"active-card\": true, \"available-limit\": 1000}}";
             
-            Operations operation = inputController.ReadSingleOperation(fakeData);
+            Operations operation = InputController.ReadSingleOperation(fakeData);
 
             Account account = new Account()
             {
@@ -38,9 +37,9 @@ namespace AuthorizerTests
         [Test]
         public void SliceLengthOperationsTest()
         {
-            string fakeData = GetFileContents("operations");
+            string fakeData = TesterUtils.GetFileContents("operations");
 
-            List<string> operations = inputController.SliceOperations(fakeData);
+            List<string> operations = InputController.SliceOperations(fakeData);
 
             Assert.AreEqual(4, operations.Count);
         }
@@ -48,9 +47,9 @@ namespace AuthorizerTests
         [Test]
         public void GetOperationsTest()
         {
-            string fakeData = GetFileContents("operations");
+            string fakeData = TesterUtils.GetFileContents("operations");
 
-            List<string> operationsString = inputController.SliceOperations(fakeData);
+            List<string> operationsString = InputController.SliceOperations(fakeData);
             List<Operations> operations = inputController.ConvertToOperation(operationsString);
 
             Account account = new Account()
@@ -74,7 +73,7 @@ namespace AuthorizerTests
         [Test]
         public void ReceiveOperationsFromStringTest()
         {
-            string fakeData = GetFileContents("operations");
+            string fakeData = TesterUtils.GetFileContents("operations");
             List<Operations> operations = inputController.ReceiveOperationsFromString(fakeData);
 
             Account account = new Account()
@@ -93,24 +92,5 @@ namespace AuthorizerTests
             Assert.AreSame(null, operations[0].Transaction);
             Assert.AreEqual(firstOperation, operations[1].Transaction);
         }
-        
-        
-        
-        private string GetFileContents(string sampleFile)
-        {
-            var asm = Assembly.GetExecutingAssembly();
-            var resource = string.Format("AuthorizerTests.Resources.{0}", sampleFile);
-            string[] names = asm.GetManifestResourceNames();
-            using (var stream = asm.GetManifestResourceStream(resource))
-            {
-                if (stream != null)
-                {
-                    var reader = new StreamReader(stream);
-                    return reader.ReadToEnd();
-                }
-            }
-            return string.Empty;
-        }
-
     }
 }

@@ -3,18 +3,18 @@ using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.AccountValidators
 {
-    class AccountAlreadyInitializedDecorator: Decorator
+    internal class AccountAlreadyInitializedValidationDecorator: ValidationDecorator
     {
-        public AccountAlreadyInitializedDecorator(Validator comp) : base(comp)
+        public AccountAlreadyInitializedValidationDecorator(Validator comp) : base(comp)
         {
         }
-
-        public override List<Violations> Validation(OperationTransaction transaction, Models.Account account)
+        
+        public override List<Violations> Validation(OperationTransaction transaction, Account account)
         {
             List<Violations> baseViolations = base.Validation(transaction, account);
             
             if(account != null)
-                baseViolations.Add(Violations.ACCOUNT_ALREADY_INITIALIZED);
+                baseViolations.Add(Violations.AccountAlreadyInitialized);
             
             return baseViolations;
         }

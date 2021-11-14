@@ -10,13 +10,6 @@ namespace AuthorizerTests
     [TestFixture]
     public class ConsoleViewTests
     {
-        private ConsoleView consoleView;
-        [SetUp]
-        public void Setup()
-        {
-            consoleView = new ConsoleView();
-        }
-
         [Test]
         public void TestConsoleOutput()
         {
@@ -24,14 +17,14 @@ namespace AuthorizerTests
             Response response = new Response()
             {
                 Account = new Account(),
-                Violations = new List<Violations>() { Violations.CARD_NOT_ACTIVE }
+                Violations = new List<Violations>() { Violations.CardNotActive }
             };
             
             using (StringWriter sw = new StringWriter())
             {
                 Console.SetOut(sw);
 
-                consoleView.PrintOutput(new List<Response>(){ response});
+                ConsoleView.PrintOutput(new List<Response>(){ response});
 
                 string expected = "{\"account\":{\"active-card\":false,\"available-limit\":0},\"violations\":[\"card-not-active\"]}\r\n";
                 Assert.AreEqual(expected, sw.ToString());

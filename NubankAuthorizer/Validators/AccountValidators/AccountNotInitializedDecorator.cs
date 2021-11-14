@@ -3,9 +3,9 @@ using NubankAuthorizer.Models;
 
 namespace NubankAuthorizer.Validators.AccountValidators
 {
-    class AccountNotInitializedDecorator : Decorator
+    internal class AccountNotInitializedValidationDecorator : ValidationDecorator
     {
-        public AccountNotInitializedDecorator(Validator comp) : base(comp)
+        public AccountNotInitializedValidationDecorator(Validator comp) : base(comp)
         {
         }
 
@@ -14,7 +14,7 @@ namespace NubankAuthorizer.Validators.AccountValidators
             List<Violations> baseViolations = new List<Violations>();
             
             if(account == null)
-                baseViolations.Add(Violations.ACCOUNT_NOT_INITIALIZED);
+                baseViolations.Add(Violations.AccountNotInitialized);
             else
                 return base.Validation(transaction, account);
             

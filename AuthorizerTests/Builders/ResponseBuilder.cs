@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using NubankAuthorizer.Models;
 
-namespace NubankAuthorizer.Models
+namespace AuthorizerTests.Builders
 {
     public class ResponseBuilder
     {
